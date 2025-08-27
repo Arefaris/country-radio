@@ -1,16 +1,27 @@
-import { RadioBrowserApi, StationSearchType } from 'radio-browser-api'
+import express from "express"
+import { getStations } from "./models/stations";
+const app = express()
 
-const api = new RadioBrowserApi('My Radio App')
+app.use(express.json());
 
-const getStations = async () => {
+const PORT = 5001
 
-const stations = await api.searchStations({
-  countryCode: 'UA',
-  limit: 5,
-  tag: "jazz"
-  })
-  console.log(stations)
-  
-}
+app.listen(PORT, ()=>{
+    console.log("Listening on port " + PORT)
+})
 
-getStations()
+app.post("/api/search", async (req, res)=>{
+   const {country, tag} = req.body
+
+   try{
+    const response = await getStations({country, tag})
+    res.json({response})
+
+   }catch(error){
+
+    console.log(error)
+    res.status(500).json({message: "server error"})
+   }
+   
+   
+})
