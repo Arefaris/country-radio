@@ -9,8 +9,7 @@ export const getStations = async (query: radio) => {
   try {
     const stations = await api.searchStations({
     countryCode: query.country,
-    limit: 100,
-    tag: query.tag
+    limit: 100
   })
 
     return stations

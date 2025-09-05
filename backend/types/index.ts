@@ -1,6 +1,6 @@
 export type radio = {
     country: string,
-    tag: string
+    tag?: string
 }
 
 export type apiStation = {
